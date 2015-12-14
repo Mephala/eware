@@ -24,7 +24,7 @@ public class TestDataMining {
             nameToProductMap.put(vatanProduct.getName(), vatanProduct);
         }
         System.out.println("Map size:" + nameToProductMap.size());
-        String searchText = "R9";
+        String searchText = "6700k";
         for (String pName : nameToProductMap.keySet()) {
             if (pName.toLowerCase().contains(searchText.toLowerCase())) {
                 System.out.println(nameToProductMap.get(pName));

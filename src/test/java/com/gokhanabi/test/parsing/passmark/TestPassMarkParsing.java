@@ -7,6 +7,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -23,7 +24,7 @@ import static org.junit.Assert.fail;
 @RunWith(JMockit.class)
 public class TestPassMarkParsing {
 
-    @Test
+    @Ignore
     public void testParsingPasssMarkGraph() {
         try {
             CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -81,4 +82,20 @@ public class TestPassMarkParsing {
         assertTrue(benchmarkList != null && benchmarkList.size() > 1);
         System.out.println(benchmarkList);
     }
+
+    @Test
+    public void testMidEndBenchmarking() {
+        List<GpuBenchmark> benchmarkList = BenchmarkParser.parseForPassmarkMidEndGpus();
+        assertTrue(benchmarkList != null && benchmarkList.size() > 1);
+        System.out.println(benchmarkList);
+    }
+
+    @Test
+    public void testLowMidRangeBenchmarking() {
+        List<GpuBenchmark> benchmarkList = BenchmarkParser.parseForPassmarkLowMidRange();
+        assertTrue(benchmarkList != null && benchmarkList.size() > 1);
+        System.out.println(benchmarkList);
+    }
+
+
 }

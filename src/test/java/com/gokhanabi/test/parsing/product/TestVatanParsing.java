@@ -57,5 +57,18 @@ public class TestVatanParsing {
         }
     }
 
+    @Test
+    public void testObtainingVatanPhones() {
+        try {
+            List<ParserVatanProduct> vatanProductList = ProductPriceParser.parseVatanPhoneList();
+            assertTrue(vatanProductList != null && vatanProductList.size() > 100);
+            System.out.println(vatanProductList.size());
+            System.out.println(vatanProductList);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            fail(t.getMessage());
+        }
+    }
+
 
 }

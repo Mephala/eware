@@ -38,26 +38,7 @@ public class ProductPriceParser {
             final String productNameSpan = "<span class=\"prdName\">";
             final int prodcutNameSpanLength = productNameSpan.length();
             int productNameContainerIndex = vatanProductsHtml.indexOf(productNameSpan);
-            while (productNameContainerIndex != -1) {
-                vatanProductsHtml = vatanProductsHtml.substring(productNameContainerIndex + prodcutNameSpanLength);
-                int aTagCloseIndex = vatanProductsHtml.indexOf("\">");
-                vatanProductsHtml = vatanProductsHtml.substring(aTagCloseIndex + "\">".length());
-                int pNameEndIndex = vatanProductsHtml.indexOf("</a>");
-                String productName = vatanProductsHtml.substring(0, pNameEndIndex);
-                vatanProductsHtml = vatanProductsHtml.substring(pNameEndIndex + "</a>".length());
-                String priceEndString = "class=\"urunListe_satisFiyat\">";
-                int priceEndLength = priceEndString.length();
-                int priceStartIndex = vatanProductsHtml.indexOf(priceEndString);
-                vatanProductsHtml = vatanProductsHtml.substring(priceStartIndex + priceEndLength);
-                int priceEndIndex = vatanProductsHtml.indexOf("<span");
-                String priceString = vatanProductsHtml.substring(0, priceEndIndex);
-                BigDecimal price = new BigDecimal(priceString);
-                ParserVatanProduct pvp = new ParserVatanProduct();
-                pvp.setName(productName);
-                pvp.setPrice(price);
-                vatanProductList.add(pvp);
-                productNameContainerIndex = vatanProductsHtml.indexOf(productNameSpan);
-            }
+            processVatanProducts(vatanProductList, vatanProductsHtml, productNameSpan, prodcutNameSpanLength, productNameContainerIndex);
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -85,30 +66,34 @@ public class ProductPriceParser {
             final String productNameSpan = "<span class=\"prdName\">";
             final int prodcutNameSpanLength = productNameSpan.length();
             int productNameContainerIndex = vatanProductsHtml.indexOf(productNameSpan);
-            while (productNameContainerIndex != -1) {
-                vatanProductsHtml = vatanProductsHtml.substring(productNameContainerIndex + prodcutNameSpanLength);
-                int aTagCloseIndex = vatanProductsHtml.indexOf("\">");
-                vatanProductsHtml = vatanProductsHtml.substring(aTagCloseIndex + "\">".length());
-                int pNameEndIndex = vatanProductsHtml.indexOf("</a>");
-                String productName = vatanProductsHtml.substring(0, pNameEndIndex);
-                vatanProductsHtml = vatanProductsHtml.substring(pNameEndIndex + "</a>".length());
-                String priceEndString = "class=\"urunListe_satisFiyat\">";
-                int priceEndLength = priceEndString.length();
-                int priceStartIndex = vatanProductsHtml.indexOf(priceEndString);
-                vatanProductsHtml = vatanProductsHtml.substring(priceStartIndex + priceEndLength);
-                int priceEndIndex = vatanProductsHtml.indexOf("<span");
-                String priceString = vatanProductsHtml.substring(0, priceEndIndex);
-                BigDecimal price = new BigDecimal(priceString);
-                ParserVatanProduct pvp = new ParserVatanProduct();
-                pvp.setName(productName);
-                pvp.setPrice(price);
-                vatanProductList.add(pvp);
-                productNameContainerIndex = vatanProductsHtml.indexOf(productNameSpan);
-            }
+            processVatanProducts(vatanProductList, vatanProductsHtml, productNameSpan, prodcutNameSpanLength, productNameContainerIndex);
         } catch (Throwable t) {
             t.printStackTrace();
         }
         return vatanProductList;
+    }
+
+    private static void processVatanProducts(List<ParserVatanProduct> vatanProductList, String vatanProductsHtml, String productNameSpan, int prodcutNameSpanLength, int productNameContainerIndex) {
+        while (productNameContainerIndex != -1) {
+            vatanProductsHtml = vatanProductsHtml.substring(productNameContainerIndex + prodcutNameSpanLength);
+            int aTagCloseIndex = vatanProductsHtml.indexOf("\">");
+            vatanProductsHtml = vatanProductsHtml.substring(aTagCloseIndex + "\">".length());
+            int pNameEndIndex = vatanProductsHtml.indexOf("</a>");
+            String productName = vatanProductsHtml.substring(0, pNameEndIndex);
+            vatanProductsHtml = vatanProductsHtml.substring(pNameEndIndex + "</a>".length());
+            String priceEndString = "class=\"urunListe_satisFiyat\">";
+            int priceEndLength = priceEndString.length();
+            int priceStartIndex = vatanProductsHtml.indexOf(priceEndString);
+            vatanProductsHtml = vatanProductsHtml.substring(priceStartIndex + priceEndLength);
+            int priceEndIndex = vatanProductsHtml.indexOf("<span");
+            String priceString = vatanProductsHtml.substring(0, priceEndIndex);
+            BigDecimal price = new BigDecimal(priceString);
+            ParserVatanProduct pvp = new ParserVatanProduct();
+            pvp.setName(productName);
+            pvp.setPrice(price);
+            vatanProductList.add(pvp);
+            productNameContainerIndex = vatanProductsHtml.indexOf(productNameSpan);
+        }
     }
 
     public static List<ParserVatanProduct> parseForVatanLaptopPrices() {
@@ -132,26 +117,7 @@ public class ProductPriceParser {
             final String productNameSpan = "<span class=\"prdName\">";
             final int prodcutNameSpanLength = productNameSpan.length();
             int productNameContainerIndex = vatanProductsHtml.indexOf(productNameSpan);
-            while (productNameContainerIndex != -1) {
-                vatanProductsHtml = vatanProductsHtml.substring(productNameContainerIndex + prodcutNameSpanLength);
-                int aTagCloseIndex = vatanProductsHtml.indexOf("\">");
-                vatanProductsHtml = vatanProductsHtml.substring(aTagCloseIndex + "\">".length());
-                int pNameEndIndex = vatanProductsHtml.indexOf("</a>");
-                String productName = vatanProductsHtml.substring(0, pNameEndIndex);
-                vatanProductsHtml = vatanProductsHtml.substring(pNameEndIndex + "</a>".length());
-                String priceEndString = "class=\"urunListe_satisFiyat\">";
-                int priceEndLength = priceEndString.length();
-                int priceStartIndex = vatanProductsHtml.indexOf(priceEndString);
-                vatanProductsHtml = vatanProductsHtml.substring(priceStartIndex + priceEndLength);
-                int priceEndIndex = vatanProductsHtml.indexOf("<span");
-                String priceString = vatanProductsHtml.substring(0, priceEndIndex);
-                BigDecimal price = new BigDecimal(priceString);
-                ParserVatanProduct pvp = new ParserVatanProduct();
-                pvp.setName(productName);
-                pvp.setPrice(price);
-                vatanProductList.add(pvp);
-                productNameContainerIndex = vatanProductsHtml.indexOf(productNameSpan);
-            }
+            processVatanProducts(vatanProductList, vatanProductsHtml, productNameSpan, prodcutNameSpanLength, productNameContainerIndex);
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -179,26 +145,7 @@ public class ProductPriceParser {
             final String productNameSpan = "<span class=\"prdName\">";
             final int prodcutNameSpanLength = productNameSpan.length();
             int productNameContainerIndex = vatanProductsHtml.indexOf(productNameSpan);
-            while (productNameContainerIndex != -1) {
-                vatanProductsHtml = vatanProductsHtml.substring(productNameContainerIndex + prodcutNameSpanLength);
-                int aTagCloseIndex = vatanProductsHtml.indexOf("\">");
-                vatanProductsHtml = vatanProductsHtml.substring(aTagCloseIndex + "\">".length());
-                int pNameEndIndex = vatanProductsHtml.indexOf("</a>");
-                String productName = vatanProductsHtml.substring(0, pNameEndIndex);
-                vatanProductsHtml = vatanProductsHtml.substring(pNameEndIndex + "</a>".length());
-                String priceEndString = "class=\"urunListe_satisFiyat\">";
-                int priceEndLength = priceEndString.length();
-                int priceStartIndex = vatanProductsHtml.indexOf(priceEndString);
-                vatanProductsHtml = vatanProductsHtml.substring(priceStartIndex + priceEndLength);
-                int priceEndIndex = vatanProductsHtml.indexOf("<span");
-                String priceString = vatanProductsHtml.substring(0, priceEndIndex);
-                BigDecimal price = new BigDecimal(priceString);
-                ParserVatanProduct pvp = new ParserVatanProduct();
-                pvp.setName(productName);
-                pvp.setPrice(price);
-                vatanProductList.add(pvp);
-                productNameContainerIndex = vatanProductsHtml.indexOf(productNameSpan);
-            }
+            processVatanProducts(vatanProductList, vatanProductsHtml, productNameSpan, prodcutNameSpanLength, productNameContainerIndex);
         } catch (Throwable t) {
             t.printStackTrace();
         }

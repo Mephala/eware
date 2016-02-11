@@ -36,35 +36,7 @@ public class BenchmarkParser {
                 fail("tableStartIndex is -1!!!!");
             passmarkHtml = passmarkHtml.substring(tableStartIndex);
             int firstTableEndIndex = passmarkHtml.indexOf("</tr>") + "</tr>".length();
-            while (firstTableEndIndex != -1) {
-                passmarkHtml = passmarkHtml.substring(firstTableEndIndex);
-                int productNameStartIndex = passmarkHtml.indexOf("id=\">") + "id=\">".length();
-                passmarkHtml = passmarkHtml.substring(productNameStartIndex);
-                int tagStopIndex = passmarkHtml.indexOf("</a>");
-                String productName = passmarkHtml.substring(0, tagStopIndex);
-                productName = productName.trim();
-                passmarkHtml = passmarkHtml.substring(tagStopIndex + "</a>".length());
-                int spanStopIndex = passmarkHtml.indexOf("</span>") + "</span>".length();
-                passmarkHtml = passmarkHtml.substring(spanStopIndex);
-                int divStopindex = passmarkHtml.indexOf("</div>");
-                String score = passmarkHtml.substring(0, divStopindex);
-                score = score.trim();
-                int priceStartIndex = passmarkHtml.indexOf("&amp;id=#price\">") + "&amp;id=#price\">".length();
-                passmarkHtml = passmarkHtml.substring(priceStartIndex);
-                int priceEndIndex = passmarkHtml.indexOf("</a>");
-                String price = passmarkHtml.substring(0, priceEndIndex);
-                price = price.trim();
-                firstTableEndIndex = passmarkHtml.indexOf("<tr>");
-                int tbodyIndex = passmarkHtml.indexOf("<td class=\"chart\">PassMark Software &copy; 2008-2015</td>");
-                GpuBenchmark benchmark = new GpuBenchmark();
-                benchmark.setName(productName);
-                benchmark.setPrice(price);
-                benchmark.setScore(score);
-                retVal.add(benchmark);
-                if (firstTableEndIndex + 10 > tbodyIndex) {
-                    break;
-                }
-            }
+            processLoop(retVal, passmarkHtml, firstTableEndIndex);
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -90,39 +62,43 @@ public class BenchmarkParser {
                 fail("tableStartIndex is -1!!!!");
             passmarkHtml = passmarkHtml.substring(tableStartIndex);
             int firstTableEndIndex = passmarkHtml.indexOf("</tr>") + "</tr>".length();
-            while (firstTableEndIndex != -1) {
-                passmarkHtml = passmarkHtml.substring(firstTableEndIndex);
-                int productNameStartIndex = passmarkHtml.indexOf("id=\">") + "id=\">".length();
-                passmarkHtml = passmarkHtml.substring(productNameStartIndex);
-                int tagStopIndex = passmarkHtml.indexOf("</a>");
-                String productName = passmarkHtml.substring(0, tagStopIndex);
-                productName = productName.trim();
-                passmarkHtml = passmarkHtml.substring(tagStopIndex + "</a>".length());
-                int spanStopIndex = passmarkHtml.indexOf("</span>") + "</span>".length();
-                passmarkHtml = passmarkHtml.substring(spanStopIndex);
-                int divStopindex = passmarkHtml.indexOf("</div>");
-                String score = passmarkHtml.substring(0, divStopindex);
-                score = score.trim();
-                int priceStartIndex = passmarkHtml.indexOf("&amp;id=#price\">") + "&amp;id=#price\">".length();
-                passmarkHtml = passmarkHtml.substring(priceStartIndex);
-                int priceEndIndex = passmarkHtml.indexOf("</a>");
-                String price = passmarkHtml.substring(0, priceEndIndex);
-                price = price.trim();
-                firstTableEndIndex = passmarkHtml.indexOf("<tr>");
-                int tbodyIndex = passmarkHtml.indexOf("<td class=\"chart\">PassMark Software &copy; 2008-2015</td>");
-                GpuBenchmark benchmark = new GpuBenchmark();
-                benchmark.setName(productName);
-                benchmark.setPrice(price);
-                benchmark.setScore(score);
-                retVal.add(benchmark);
-                if (firstTableEndIndex + 10 > tbodyIndex) {
-                    break;
-                }
-            }
+            processLoop(retVal, passmarkHtml, firstTableEndIndex);
         } catch (Throwable t) {
             t.printStackTrace();
         }
         return retVal;
+    }
+
+    private static void processLoop(List<GpuBenchmark> retVal, String passmarkHtml, int firstTableEndIndex) {
+        while (firstTableEndIndex != -1) {
+            passmarkHtml = passmarkHtml.substring(firstTableEndIndex);
+            int productNameStartIndex = passmarkHtml.indexOf("id=\">") + "id=\">".length();
+            passmarkHtml = passmarkHtml.substring(productNameStartIndex);
+            int tagStopIndex = passmarkHtml.indexOf("</a>");
+            String productName = passmarkHtml.substring(0, tagStopIndex);
+            productName = productName.trim();
+            passmarkHtml = passmarkHtml.substring(tagStopIndex + "</a>".length());
+            int spanStopIndex = passmarkHtml.indexOf("</span>") + "</span>".length();
+            passmarkHtml = passmarkHtml.substring(spanStopIndex);
+            int divStopindex = passmarkHtml.indexOf("</div>");
+            String score = passmarkHtml.substring(0, divStopindex);
+            score = score.trim();
+            int priceStartIndex = passmarkHtml.indexOf("&amp;id=#price\">") + "&amp;id=#price\">".length();
+            passmarkHtml = passmarkHtml.substring(priceStartIndex);
+            int priceEndIndex = passmarkHtml.indexOf("</a>");
+            String price = passmarkHtml.substring(0, priceEndIndex);
+            price = price.trim();
+            firstTableEndIndex = passmarkHtml.indexOf("<tr>");
+            int tbodyIndex = passmarkHtml.indexOf("<td class=\"chart\">PassMark Software &copy; 2008-2015</td>");
+            GpuBenchmark benchmark = new GpuBenchmark();
+            benchmark.setName(productName);
+            benchmark.setPrice(price);
+            benchmark.setScore(score);
+            retVal.add(benchmark);
+            if (firstTableEndIndex + 10 > tbodyIndex) {
+                break;
+            }
+        }
     }
 
     public static List<GpuBenchmark> parseForPassmarkLowMidRange() {
@@ -144,35 +120,7 @@ public class BenchmarkParser {
                 fail("tableStartIndex is -1!!!!");
             passmarkHtml = passmarkHtml.substring(tableStartIndex);
             int firstTableEndIndex = passmarkHtml.indexOf("</tr>") + "</tr>".length();
-            while (firstTableEndIndex != -1) {
-                passmarkHtml = passmarkHtml.substring(firstTableEndIndex);
-                int productNameStartIndex = passmarkHtml.indexOf("id=\">") + "id=\">".length();
-                passmarkHtml = passmarkHtml.substring(productNameStartIndex);
-                int tagStopIndex = passmarkHtml.indexOf("</a>");
-                String productName = passmarkHtml.substring(0, tagStopIndex);
-                productName = productName.trim();
-                passmarkHtml = passmarkHtml.substring(tagStopIndex + "</a>".length());
-                int spanStopIndex = passmarkHtml.indexOf("</span>") + "</span>".length();
-                passmarkHtml = passmarkHtml.substring(spanStopIndex);
-                int divStopindex = passmarkHtml.indexOf("</div>");
-                String score = passmarkHtml.substring(0, divStopindex);
-                score = score.trim();
-                int priceStartIndex = passmarkHtml.indexOf("&amp;id=#price\">") + "&amp;id=#price\">".length();
-                passmarkHtml = passmarkHtml.substring(priceStartIndex);
-                int priceEndIndex = passmarkHtml.indexOf("</a>");
-                String price = passmarkHtml.substring(0, priceEndIndex);
-                price = price.trim();
-                firstTableEndIndex = passmarkHtml.indexOf("<tr>");
-                int tbodyIndex = passmarkHtml.indexOf("<td class=\"chart\">PassMark Software &copy; 2008-2015</td>");
-                GpuBenchmark benchmark = new GpuBenchmark();
-                benchmark.setName(productName);
-                benchmark.setPrice(price);
-                benchmark.setScore(score);
-                retVal.add(benchmark);
-                if (firstTableEndIndex + 10 > tbodyIndex) {
-                    break;
-                }
-            }
+            processLoop(retVal, passmarkHtml, firstTableEndIndex);
         } catch (Throwable t) {
             t.printStackTrace();
         }
